@@ -43,7 +43,7 @@ class ExternalPostManager {
     }
 
 
-    // Success Response
+    // Show response
     private function respond($message, $success = true) {
         return new WP_REST_Response([
             'success' => $success,
@@ -67,7 +67,7 @@ class ExternalPostManager {
 
         $post_id = wp_insert_post($post_data);
 
-       // Display error if occur
+        // Display error if occur
         if (is_wp_error($post_id)) {
             return $this->respond('Failed to create post', false);
         }
@@ -82,7 +82,7 @@ class ExternalPostManager {
         $content = $request->get_param('content');
         $status = $request->get_param('status');
 
-        if(! get_post($post_id)) {
+        if (! get_post($post_id)) {
             return $this->respond('Post ID not found', false);
         }
 
@@ -104,7 +104,7 @@ class ExternalPostManager {
     }
 
     // Delete post
-    public function delete_post($request){
+    public function delete_post($request) {
         $post_id = $request->get_param('id');
 
         if (! get_post($post_id)) {
@@ -123,12 +123,11 @@ class ExternalPostManager {
     }
 
     // Authenticate request
-    public function authenticate_request($request){
+    public function authenticate_request($request) {
         $api_key = $request->get_header('api_key');
         $valid_api_key = EXTERNAL_POST_MANAGER_API_KEY;
-        
-        return $api_key && $api_key === $valid_api_key;
 
+        return $api_key && $api_key === $valid_api_key;
     }
 }
 
